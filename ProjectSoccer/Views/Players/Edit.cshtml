@@ -1,0 +1,96 @@
+﻿@model ProjectSoccer.Models.Player
+
+@{
+    ViewData["Title"] = "Edit";
+    
+}
+<script>var playerId = @Model.Id;</script>
+
+<head>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+<h1>Edit</h1>
+
+<div>
+    <h4>Player</h4>
+    <hr />
+    <dl class="row text-xl-start">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CurrentClub)
+        </dt>
+        <dd class="col-sm-10" style="glyph-orientation-horizontal">
+            <img src="@Html.DisplayFor(model => model.CurrentClub)" alt="Image description" style="max-width: 30px" />
+        </dd>
+    </dl>
+</div>
+<div>
+    <input type="text" class="form-control" id=" txtPlayerFirstName" placeholder="@Model.FirstName" />
+    <br />
+    <input type="text" class="form-control" id=" txtPlayerLastName" placeholder="@Model.LastName" />
+    <br />
+    <input type="datetime-local" class="form-control" id="txtPlayerDateOfBirth" placeholder="@Model.DateOfBirth" />
+    <br />
+    <input type="text" class="form-control" id=" txtPlayerClubId" placeholder="@Model.ClubId" />
+    <br />
+    <button type="button" id="btn-player-update" class="btn btn-outline-success col-form-label-sm"><i class="bi bi-pencil"></i>Update</button>
+</div>
+<br />
+<div>
+    <a asp-action="Details" asp-route-id="@Model?.Id">Details</a>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts{
+    <script>
+    $(document).ready(function() {
+        console.log("jQuery is working!");
+    });
+    </script>
+
+    <script>
+    
+        $("#btn-player-update").click(function () {
+            let player = {
+                FirstName: $("#txtPlayerFirstName").val(),
+                LastName: $("#txtPlayerLastName").val(),
+                DateOfBirth: $("#txtPlayerDateOfBirth").val(),
+                ClubId: $("#txtPlayerClubId").val()
+            };
+    
+            $.ajax({
+                url: `/Players/Update/${@Model.Id}`,
+                type: 'PUT',
+                data: JSON.stringify(player),
+                contentType: "application/json",
+                success: function (data) {
+                    console.log(player);
+                    alert("The player is updated!");
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+
+        });
+    
+    </script>
+
+}

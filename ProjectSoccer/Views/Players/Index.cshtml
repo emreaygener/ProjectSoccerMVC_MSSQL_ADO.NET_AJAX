@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ProjectSoccer.Models.Player>
+@{
+    ViewData["Title"] = "Players";
+}
+
+<br />
+<h1 class="text-center">Players</h1>
+<br />
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+         <a asp-action="Index" type="button" id="btn-refresh-list" class="btn btn-outline-light btn-dark"><i class="bi bi-pencil"></i> Refresh Table</a>
+        <div class="offset-9">
+            <a asp-controller="Clubs" asp-action="Index">Clubs</a> |
+            <a asp-controller="Players" asp-action="Index">Players</a>
+        </div>
+        <table id="tbl-players" class="table">
+            <thead>
+                <tr class="text-center">
+                    <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+                    <th>@Html.DisplayNameFor(model => model.LastName)</th>
+                    <th>@Html.DisplayNameFor(model => model.DateOfBirth)</th>
+                    <th>@Html.DisplayNameFor(model => model.ClubId)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="text-center">
+                        <td class="align-middle" style="vertical-align: central">
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td class="align-middle" style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        @{
+                            var age = DateTime.Now.Year - item.DateOfBirth.Year;
+                        }
+
+                        <td class="align-middle" style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => age)
+                        </td>
+                        <td class="align-middle" style="vertical-align: middle">
+                            <img src="@Html.DisplayFor(modelItem => item.CurrentClub)" alt="Image      description" style="max-width: 25px" />
+                        </td>
+                        <td class="align-middle">
+                            <a class="btn btn-outline-danger" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i>Edit</a> |
+                            <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye"></i>Details</a> |
+                            <a class="btn btn-outline-primary" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i>Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<br />
+<div id="input-div" class="col-3 offset-7 container-sm">
+    Name :<input type="text" class="form-control" id="txtPlayerFirstName" placeholder="Ichigo" />
+    Surname: <input type="text" class="form-control" id="txtPlayerLastName" placeholder="Kurosaki" />
+    Age: <input type="text" class="form-control" id="txtPlayerAge" placeholder="17" />
+    Abbreviation of Players Club: <input type="text" class="form-control" id="txtPlayerClub" placeholder="SHI" />
+    <br />
+    <button type="button" id="btn-create-new" class="btn btn-outline-success offset-7"><i class="bi bi-pencil"></i> Create New Player</button>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#btn-create-new").click(function () {
+                let player = {
+                    FirstName: $("#txtPlayerFirstName").val(),
+                    LastName: $("#txtPlayerLastName").val(),
+                    Age: $("#txtPlayerAge").val(),
+                    CurrentClub: $("#txtPlayerClub").val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Players/Create",
+                    data: JSON.stringify(player),
+                    contentType: "application/json",
+                    success: function (response) {
+                        alert("A new player is added!");
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+
+            });
+        });
+    </script>
+}
