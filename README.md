@@ -2,6 +2,7 @@
 - Bu proje futbol kulüpleri ve futbolcuların sıralandığı bir ASP.NET MVC projesidir.
 - Veri tabanı için MS SQL Server, Veri tabanı ile iletişimi sağlamak için de ADO.NET kullanılmıştır.
 - DB First bir yaklaşım izlenmiştir, başlangıç verileri sql komutları ile oluşturulmuştur.
+
 Aşağıdaki komutlar ile Data Seeding işlemini gerçekleştirebilirsiniz.
 ```sql
 CREATE TABLE Clubs (
