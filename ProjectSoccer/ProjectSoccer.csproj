@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\jquery-unobtrusive-ajax\**" />
+    <Content Remove="wwwroot\lib\jquery-unobtrusive-ajax\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery-unobtrusive-ajax\**" />
+    <None Remove="wwwroot\lib\jquery-unobtrusive-ajax\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="jQuery" Version="3.7.0" />
     <PackageReference Include="jQuery.Ajax.Unobtrusive" Version="2.0.20710" />
     <PackageReference Include="jQuery.Validation" Version="1.19.5" />
@@ -17,7 +24,6 @@
   </ItemGroup>
     <ItemGroup>
     	<Content Include="wwwroot\lib\jquery\jquery-3.6.0.min.js" />
-    	<Content Include="wwwroot\lib\jquery-unobtrusive-ajax\jquery.unobtrusive-ajax.min.js" />
     </ItemGroup>
 
 </Project>

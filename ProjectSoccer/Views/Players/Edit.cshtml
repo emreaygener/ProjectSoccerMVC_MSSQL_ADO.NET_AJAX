@@ -4,12 +4,10 @@
     ViewData["Title"] = "Edit";
     
 }
-<script>var playerId = @Model.Id;</script>
-
 <head>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+
 <h1>Edit</h1>
 
 <div>
@@ -42,55 +40,53 @@
         </dd>
     </dl>
 </div>
-<div>
-    <input type="text" class="form-control" id=" txtPlayerFirstName" placeholder="@Model.FirstName" />
+<form>
+    Name: 
+    <input type="text" class="form-control" id="txtPlayerFirstName" placeholder="@Model.FirstName" value="@Model.FirstName" />
+    <br />Surname: 
+    <input type="text" class="form-control" id="txtPlayerLastName" placeholder="@Model.LastName" value="@Model.LastName" />
+    <br />Date (*Required): 
+    <input type="date" class="form-control" id="txtPlayerDateOfBirth" placeholder="@Model.DateOfBirth" required />
+    <br /> Club Id (*Required):
+    <input type="text" class="form-control" id="txtPlayerClubId" placeholder="@Model.ClubId" required value="@Model.ClubId"/>
     <br />
-    <input type="text" class="form-control" id=" txtPlayerLastName" placeholder="@Model.LastName" />
-    <br />
-    <input type="datetime-local" class="form-control" id="txtPlayerDateOfBirth" placeholder="@Model.DateOfBirth" />
-    <br />
-    <input type="text" class="form-control" id=" txtPlayerClubId" placeholder="@Model.ClubId" />
-    <br />
-    <button type="button" id="btn-player-update" class="btn btn-outline-success col-form-label-sm"><i class="bi bi-pencil"></i>Update</button>
-</div>
+    <button type="submit" id="btn-player-update" class="btn btn-outline-success col-form-label-sm"><i class="bi bi-pencil"></i>Update</button>
+</form>
 <br />
 <div>
     <a asp-action="Details" asp-route-id="@Model?.Id">Details</a>
     <a asp-action="Index">Back to List</a>
 </div>
-@section Scripts{
-    <script>
-    $(document).ready(function() {
-        console.log("jQuery is working!");
-    });
-    </script>
 
+@section Scripts {
     <script>
-    
-        $("#btn-player-update").click(function () {
-            let player = {
-                FirstName: $("#txtPlayerFirstName").val(),
-                LastName: $("#txtPlayerLastName").val(),
-                DateOfBirth: $("#txtPlayerDateOfBirth").val(),
-                ClubId: $("#txtPlayerClubId").val()
-            };
-    
-            $.ajax({
-                url: `/Players/Update/${@Model.Id}`,
-                type: 'PUT',
-                data: JSON.stringify(player),
-                contentType: "application/json",
-                success: function (data) {
-                    console.log(player);
-                    alert("The player is updated!");
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr.responseText);
-                }
+        $(document).ready(function () {
+            $("#btn-player-update").click(function () {
+                let player = {
+                    FirstName: $("#txtPlayerFirstName").val(),
+                    LastName: $("#txtPlayerLastName").val(),
+                    DateOfBirth: $("#txtPlayerDateOfBirth").val(),
+                    ClubId: $("#txtPlayerClubId").val()
+                };
+
+                $.ajax({
+                    type: "PUT",
+                    url: `/Players/Update/${@Model.Id}`,
+                    data: JSON.stringify(player),
+                    contentType: "application/json",
+                    success: function (response) {
+                        console.log(player);
+                        alert("The player is updated!");
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                        var clubid = parseInt(player.ClubId);
+                        if (isNaN(clubid)) {
+                            alert("Invalid input!")
+                        }
+                    }
+                });
             });
-
         });
-    
     </script>
-
 }

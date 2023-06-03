@@ -37,7 +37,7 @@
     <br />
     <input type="text" class="form-control" id="txtClubLogo" placeholder="@Model.Logo" />
     <br />
-    <button type="button" id="btn-update" class="btn btn-outline-success col-form-label-sm"><i class="bi bi-pencil"></i> Update</button>
+    <button type="submit" id="btn-update" class="btn btn-outline-success col-form-label-sm"><i class="bi bi-pencil"></i> Update</button>
 </div>
 <br />
 <div>
@@ -65,6 +65,7 @@
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText);
+                        alert("Invalid Input!")
                     }
                 });
 

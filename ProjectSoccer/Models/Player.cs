@@ -11,8 +11,10 @@ public class Player : BaseEntity
     [Display(Name = "Surname")]
     public string LastName { get; set; }
     [Display(Name = "Age")]
+    [Required(ErrorMessage = "Required Property")]
     public DateTime DateOfBirth { get; set; }
     [Display(Name = "Club")]
+    [Required(ErrorMessage = "Required Property")]
     [ForeignKey(nameof(Club))]
     public int ClubId { get; set; }
     public string CurrentClub { get; set; }

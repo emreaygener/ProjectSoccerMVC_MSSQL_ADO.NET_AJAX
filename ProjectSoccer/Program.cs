@@ -1,5 +1,7 @@
 using ProjectSoccer;
 using ProjectSoccer.DataAccessLayer.Repositories;
+using ProjectSoccer.Middlewares;
+using ProjectSoccer.Services;
 using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ClubRepository>(service => new(new SqlConnection(builder.Configuration.GetConnectionString("DefaultSqlConnection"))));
 builder.Services.AddScoped<PlayerRepository>(service => new(new SqlConnection(builder.Configuration.GetConnectionString("DefaultSqlConnection"))));
+builder.Services.AddSingleton<ILoggerService, LoggerService>();
 
 var app = builder.Build();
 
@@ -25,6 +28,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseCustomExceptionMiddleware();
 
 app.MapControllerRoute(
     name: "default",

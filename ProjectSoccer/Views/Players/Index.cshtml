@@ -55,14 +55,14 @@
     </div>
 </div>
 <br />
-<div id="input-div" class="col-3 offset-7 container-sm">
+<form id="input-div" class="col-3 offset-7 container-sm">
     Name :<input type="text" class="form-control" id="txtPlayerFirstName" placeholder="Ichigo" />
     Surname: <input type="text" class="form-control" id="txtPlayerLastName" placeholder="Kurosaki" />
-    Age: <input type="text" class="form-control" id="txtPlayerAge" placeholder="17" />
+    Age: <input type="text" class="form-control" id="txtPlayerAge" placeholder="17" required />
     Abbreviation of Players Club: <input type="text" class="form-control" id="txtPlayerClub" placeholder="SHI" />
     <br />
-    <button type="button" id="btn-create-new" class="btn btn-outline-success offset-7"><i class="bi bi-pencil"></i> Create New Player</button>
-</div>
+    <button type="submit" id="btn-create-new" class="btn btn-outline-success offset-7"><i class="bi bi-pencil"></i> Create New Player</button>
+</form>
 @section Scripts {
     <script>
         $(document).ready(function () {
@@ -84,6 +84,7 @@
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText);
+                        alert("Invalid input!")
                     }
                 });
 

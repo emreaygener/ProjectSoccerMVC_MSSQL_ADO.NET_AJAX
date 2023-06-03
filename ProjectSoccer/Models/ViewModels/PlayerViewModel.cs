@@ -1,4 +1,8 @@
-﻿namespace ProjectSoccer.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+
+namespace ProjectSoccer.Models.ViewModels
 {
     public class PlayerViewModel
     {
